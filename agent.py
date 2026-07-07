@@ -2,20 +2,21 @@
 
 Builds a ReAct-style agent bound to the instance config. When
 ``LLM_PROVIDER=agent-manager``, requests are routed through the AM LLM
-provider (which applies guardrails). Otherwise calls OpenAI directly.
+provider (which applies guardrails). Otherwise calls Google Gemini directly.
 """
 
 from __future__ import annotations
 
 from typing import Any
 
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
 from langgraph.prebuilt import create_react_agent
 
 from config import Config
 from tools import build_tools
 
-MODEL = "gpt-4o-mini"
+MODEL = "gemini-2.0-flash"
 
 SYSTEM_PROMPT_TEMPLATE = (
     "You are an IT helpdesk agent for {company_name}. "
@@ -59,7 +60,11 @@ def build_agent(cfg: Config) -> Any:
             },
         )
     else:
-        llm = ChatOpenAI(model=MODEL, temperature=0)
+        llm = ChatGoogleGenerativeAI(
+            model=MODEL,
+            temperature=0,
+            google_api_key=cfg.google_api_key,
+        )
     tools = build_tools(cfg)
     system_prompt = SYSTEM_PROMPT_TEMPLATE.format(
         company_name=cfg.company_name,

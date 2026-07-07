@@ -10,7 +10,7 @@ Before deploying this agent, ensure you have:
 
 ### Required API Keys
 
-- **OpenAI API Key**: For GPT-powered conversations
+- **Google API Key**: For Gemini-powered conversations
 
 ## 1. Deploy in Agent Manager
 
@@ -44,7 +44,7 @@ Fill in the agent creation form with these exact values:
 Add the following environment variables in the create form:
 
 ```env
-OPENAI_API_KEY=<your-openai-api-key>
+GOOGLE_API_KEY=<your-google-api-key>
 ```
 
 ### Step 5: Deploy the Agent
@@ -136,14 +136,14 @@ Follow these steps to add a guardrail that restricts the agent to IT support que
 
 1. Navigate to the organization level and select **LLM Service Providers** from the left navigation
 2. Click **Add Service Provider**
-3. Set the name as `openai llm provider` and select **OpenAI** as the provider template
-4. Enter your OpenAI API key and click **Add Provider**
+3. Set the name as `google llm provider` and select **Google** as the provider template
+4. Enter your Google API key and click **Add Provider**
 
 ### Step 3: Add the LLM Provider to the Agent
 
 1. Go to the agent and click **Configure** from the left navigation
 2. Click **Add LLM Provider**
-3. Set the name as `openai gpt` and select the created LLM service provider under the service provider list
+3. Set the name as `google gemini` and select the created LLM service provider under the service provider list
 
 ### Step 4: Add the Prompt Decorator Guardrail
 

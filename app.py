@@ -26,7 +26,7 @@ log.info(
     "IT helpdesk agent ready (company=%s, tone=%s, llm_provider=%s)",
     CONFIG.company_name,
     CONFIG.tone,
-    "agent-manager" if CONFIG.use_llm_provider else "openai-direct",
+    "agent-manager" if CONFIG.use_llm_provider else "google-direct",
 )
 
 

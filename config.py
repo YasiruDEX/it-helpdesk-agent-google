@@ -2,7 +2,7 @@
 
 Set ``USE_LLM_PROVIDER=true`` to route through the AM LLM provider
 (with guardrails) using ``LLM_PROVIDER_URL`` and ``LLM_PROVIDER_KEY``.
-By default (``false``), calls OpenAI directly using ``OPENAI_API_KEY``.
+By default (``false``), calls Google Gemini directly using ``GOOGLE_API_KEY``.
 """
 
 from __future__ import annotations
@@ -24,6 +24,7 @@ class Config:
     tone: str
     max_tickets_per_query: int
     additional_guidance: str
+    google_api_key: str
     use_llm_provider: bool
     llm_provider_url: str
     llm_provider_key: str
@@ -39,6 +40,7 @@ class Config:
             ) from None
 
         use_llm_provider = _env("USE_LLM_PROVIDER", "false").lower() == "true"
+        google_api_key = _env("GOOGLE_API_KEY", "")
         llm_provider_url = _env("LLM_PROVIDER_URL", "")
         llm_provider_key = _env("LLM_PROVIDER_KEY", "")
 
@@ -51,12 +53,17 @@ class Config:
                 raise RuntimeError(
                     "USE_LLM_PROVIDER is true but LLM_PROVIDER_KEY is not set"
                 )
+        elif not google_api_key:
+            raise RuntimeError(
+                "GOOGLE_API_KEY is required when USE_LLM_PROVIDER is false"
+            )
 
         return cls(
             company_name=_env("COMPANY_NAME", "AcmeCorp"),
             tone=_env("TONE", "professional and helpful"),
             max_tickets_per_query=max_tickets,
             additional_guidance=_env("ADDITIONAL_GUIDANCE", ""),
+            google_api_key=google_api_key,
             use_llm_provider=use_llm_provider,
             llm_provider_url=llm_provider_url,
             llm_provider_key=llm_provider_key,
